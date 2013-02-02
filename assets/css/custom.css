@@ -55,7 +55,7 @@ h2 {padding: 20px 0px 20px 0px;}
 /* Publication styles */
 .pub {
 	position: relative;
-	margin: 15px 0;
+	margin: 45px 0;
 	padding: 39px 19px 14px;
 	*padding-top: 19px;
 	background-color: #fff;
@@ -98,5 +98,7 @@ h2 {padding: 20px 0px 20px 0px;}
 	content: "PhD Thesis";	
 	background-color: #008C9E;
 }
+
+
 
 	      
