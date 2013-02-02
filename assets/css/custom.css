@@ -1,0 +1,102 @@
+body {
+	padding-top: 20px;
+	padding-bottom: 40px;
+}
+
+h2 {padding: 20px 0px 20px 0px;}
+.footer {
+	color: gray;
+	font-size: 12px;	
+}
+
+.footer a {
+	color: #81A8B8;	
+}
+
+/* Custom container */
+.container-narrow {
+	margin: 0 auto;
+	max-width: 700px;
+}
+.container-narrow > hr {
+	margin: 30px 0;
+}
+
+ /* Short bio */
+.jumbotron {
+	margin: 60px 0;
+	text-align: left;
+}
+.jumbotron h1 {
+	font-size: 42px;
+	line-height: 1;
+}
+.jumbotron p {
+	font-size: 22px;
+}
+.jumbotron .btn {
+	font-size: 21px;
+	padding: 14px 24px;
+}
+
+.headline {
+	margin: 60px 0;
+}
+.headline p + h4 {
+	margin-top: 28px;
+}
+.infolinks {
+	margin-bottom: 180px;	      	
+}	    
+.infolinks a:hover {
+	text-decoration:none;
+}
+
+/* Publication styles */
+.pub {
+	position: relative;
+	margin: 15px 0;
+	padding: 39px 19px 14px;
+	*padding-top: 19px;
+	background-color: #fff;
+	border: 1px solid #ddd;
+	-webkit-border-radius: 4px;
+	-moz-border-radius: 4px;
+	border-radius: 4px;
+}
+
+.pub h4 {
+	font-size: 12px;
+	margin-top: 20px;
+}
+
+.pub p {
+	margin-top: 10px;
+	font-size: 12px;
+	font-style: italic;
+}
+
+.pub:after {
+	content: "Research paper";
+	position: absolute;
+	top: -1px;
+	left: -1px;
+	padding: 3px 7px;
+	font-size: 12px;
+	font-weight: bold;
+	background-color: #f5f5f5;
+	border: 1px solid #ddd;
+	color: #9da0a4;
+	-webkit-border-radius: 4px 0 4px 0;
+	-moz-border-radius: 4px 0 4px 0;
+	      border-radius: 4px 0 4px 0;
+}
+
+
+.phdthesis:after {
+	color: white;
+	content: "PhD Thesis";	
+	background-color: #008C9E;
+}
+
+	      
