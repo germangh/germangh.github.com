@@ -52,6 +52,11 @@ h2 {padding: 20px 0px 20px 0px;}
 	text-decoration:none;
 }
 
+.embedded {
+	padding-top: 20px;
+	padding-bottom: 20px;
+}
+
 /* Publication styles */
 .pub {
 	position: relative;
