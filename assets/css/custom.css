@@ -53,6 +53,7 @@ h2 {padding: 20px 0px 20px 0px;}
 }
 
 .speakerdeck {
+	padding-bottom: -10px;
 	visibility: hidden;
 	padding-bottom: 20px;
 }
