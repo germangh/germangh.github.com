@@ -76,6 +76,12 @@ h2 {padding: 20px 0px 20px 0px;}
 	font-style: italic;
 }
 
+.pub ul {
+	margin-top: 10px;
+	font-size: 12px;
+	font-style: italic;
+}
+
 .pub:after {
 	content: "Research paper";
 	position: absolute;
@@ -98,6 +104,21 @@ h2 {padding: 20px 0px 20px 0px;}
 	content: "PhD Thesis";	
 	background-color: #008C9E;
 }
+
+.lecture-slides:after {
+	color: gray;
+	content: "Lecture slides";	
+	background-color: #E2F7CE;
+}
+
+.course-exercises:after {
+	content: "Course exercises";	
+}
+
+.courseware:after {	
+	content: "Courseware";	
+}
+
 
 
 
