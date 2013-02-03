@@ -52,7 +52,8 @@ h2 {padding: 20px 0px 20px 0px;}
 	text-decoration:none;
 }
 
-.embedded {
+.speakerdeck {
+	visibility: hidden;
 	padding-top: 20px;
 	padding-bottom: 20px;
 }
