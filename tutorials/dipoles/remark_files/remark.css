@@ -25,8 +25,8 @@ to be unique). */
 #remark
 {
     /* Fonts from the sans-serif generic family are easier to read
-    on the screen. Sans-serif roughly means 'without wiggles'. */
-    font-family: 'Open Sans', Trebuchet MS, Sans-Serif;
+    on the screen. Sans-serif roughly means 'without wiggles'. */   
+    font-family: 'Open Sans', Trebuchet MS, Sans-Serif;*/
     /* See the W3C CSS School for this trick. */
     font-size: 100%;
     /* Using more space between lines of text makes it easier to read. */
