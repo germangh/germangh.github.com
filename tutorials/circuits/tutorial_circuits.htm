@@ -7,13 +7,13 @@
 <link rel="stylesheet" type="text/css" href="remark_files/pygments.css" />
 <script type="text/javascript" src="remark_files/highslide/highslide-full.js"></script>
 <link rel="stylesheet" type="text/css" href="remark_files/highslide/highslide.css" />
-<link href='http://fonts.googleapis.com/css?family=Open+Sans:300italic,700italic,300,700' rel='stylesheet' type='text/css'>
 <script type="text/javascript">
 hs.graphicsDir = 'remark_files/highslide/graphics/';
 hs.showCredits = false;
 </script>
 <script type="text/javascript" src="remark_files/highslide/highslide-full.js"></script>
 <link rel="stylesheet" type="text/css" href="remark_files/highslide/highslide.css" />
+<link href='http://fonts.googleapis.com/css?family=Open+Sans:300italic,700italic,300,700' rel='stylesheet' type='text/css'>
 <script type="text/javascript">
 hs.graphicsDir = 'remark_files/highslide/graphics/';
 hs.showCredits = false;
@@ -46,7 +46,6 @@ that, as in most real coupling analyses, the lag of the coupling is unknown.
 Therefore, we need to estimate information flow at different lags in order
 to determine the coupling delay. This tutorial will teach you how to do this
 with <a href="">TIM Matlab interface</a>.</p>
-
 <h2>Tutorial files</h2>
 <p>Here we provide the Matlab scripts that are used in this tutorial. </p>
 <p><a href="http://kasku.org/tutorials/tutorial_circuits.zip">Download tutorial files</a></p>
@@ -102,8 +101,8 @@ embed in higher dimensions until the results of the analysis are consistent.</p>
 <h3>Lambda functions</h3>
 <p>For convenience, we shall define a lambda function (or <code>function_handle</code> 
 in Matlab's terminology) as follows:</p>
-<pre><code>&gt;&gt; estimator = @(x) transfer_entropy_t(x(1,:), x(2,:), x(3,:), ...
-    5, 0, 5:30, 0, 20);
+<pre><code>&gt;&gt; estimator = @(x) transfer_entropy_t(x(1,:), x(2,:), ...
+         x(3,:), 5, 0, 5:30, 0, 20);
 </code></pre>
 <p>This lambda function bundles together the chosen information measure 
  with its associated input parameters 
@@ -119,7 +118,8 @@ temporal variance. If we assume that the coupling dynamics are relatively
 slow, we can reduce the variance by simply smoothing the estimates e.g. 
 with a moving average filter. In order to incorporate this post-processing 
 step, we further define the following lambda function:</p>
-<pre><code>&gt;&gt; estimator_smooth = @(x) filter(1/20*ones(1,20), 1, estimator(x), [], 2);
+<pre><code>&gt;&gt; estimator_smooth = @(x) filter(1/20*ones(1,20), 1, ...
+        estimator(x), [], 2);
 </code></pre>
 <h3>Temporal transfer entropy estimates</h3>
 <p>We are now ready to measure information flow from the <em>source</em> time-series 
@@ -129,7 +129,7 @@ towards the <em>sink</em> time-series using transfer entropy (TE):</p>
 </code></pre>
 <p>where the first command builds the future of <code>Ssink</code>. </p>
 <h2>Assessing significance</h2>
-<p><strong>Note:</strong> See <a href="">this tutorial</a> for a brief explanation of what significance
+<p><strong>Note:</strong> See <a href="http://www.germangh.com/tutorials/gauss/tutorial_gauss.htm">this tutorial</a> for a brief explanation of what significance
 and significance threshold mean.</p>
 <p>Determining the significance threshold for the temporal TE estimates that
 we obtained in the previous section can be easily done with 
@@ -197,20 +197,20 @@ Significance for transfer entropy from the slave circuit towards the master circ
 from slave to master at any lag.</p>
 <p>For convenience, you can generate the four figures above by just running
 the following commands:</p>
-<pre><code>&gt;&gt; pset = generate_pset                       % load the dataset
-&gt;&gt; results = tutorial-circuits-analysis(pset) % performs the TE analysis
-&gt;&gt; tutorial-circuits-figures(results)         % generates the figures
+<pre><code>&gt;&gt; pset = generate_pset                    % load dataset
+&gt;&gt; res  = tutorial_circuits_analysis(pset) % TE analysis
+&gt;&gt; tutorial_circuits_figures(res)          % generate figures
 </code></pre>
 <p>However, the best way of learning this tutorial is that you try to re-generate
-these figures without using the provided function <code>tutorial-circuits-analysis</code>.</p>
-<h2>Credits</h2>
-<p><a href="http://www.cs.tut.fi/~gomezher/index.htm">German Gomez-Herrero</a> wrote this tutorial. </p>
+these figures without using the provided function <code>tutorial_circuits_analysis</code>.</p>
+<h2>Credit</h2>
+<p><a href="http://germangh.com">German Gomez-Herrero</a> wrote this tutorial. </p>
 <p>The experimental measurements were obtained by Miguel C. Soriano from the
 <a href="http://ifisc.uib.es/">Institute for Cross-Disciplinary Physics and Complex Systems</a>,
 at Palma de Mallorca, Spain.</p>
 </div>
 <div id="remark-footer">
-<p><a href="http://kaba.hilvi.org/remark">Remark 1.5.1</a> - Page generated 05.02.2013 12:30.</p>
+<p><a href="http://kaba.hilvi.org/remark">Remark 1.5.1</a> - Page generated 05.02.2013 13:09.</p>
 </div>
 </div>
 </body>
