@@ -1,0 +1,217 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<title>Tutorial: Dealing with unknown coupling delays</title>
+<link rel="stylesheet" type="text/css" href="remark_files/remark.css" />
+<link rel="stylesheet" type="text/css" href="remark_files/pygments.css" />
+<script type="text/javascript" src="remark_files/highslide/highslide-full.js"></script>
+<link rel="stylesheet" type="text/css" href="remark_files/highslide/highslide.css" />
+<link href='http://fonts.googleapis.com/css?family=Open+Sans:300italic,700italic,300,700' rel='stylesheet' type='text/css'>
+<script type="text/javascript">
+hs.graphicsDir = 'remark_files/highslide/graphics/';
+hs.showCredits = false;
+</script>
+<script type="text/javascript" src="remark_files/highslide/highslide-full.js"></script>
+<link rel="stylesheet" type="text/css" href="remark_files/highslide/highslide.css" />
+<script type="text/javascript">
+hs.graphicsDir = 'remark_files/highslide/graphics/';
+hs.showCredits = false;
+</script>
+<script type="text/javascript" src="remark_files/highslide/highslide-full.js"></script>
+<link rel="stylesheet" type="text/css" href="remark_files/highslide/highslide.css" />
+<script type="text/javascript">
+hs.graphicsDir = 'remark_files/highslide/graphics/';
+hs.showCredits = false;
+</script>
+
+</head>
+<body>
+<div id = "remark-all">
+<div id = "remark">
+<div class = "ParentList">
+
+<ol>
+<li><a href="tutorial_circuits.htm">Tutorial: Dealing with unknown coupling delays</a></li>
+</ol>
+</div>
+
+<div class = "remark-end-list"></div>
+
+<h1>Tutorial: Dealing with unknown coupling delays</h1>
+<p><a href="http://germangh.com">Back to my homepage</a></p>
+<p>In this tutorial we will study the coupling dynamics underlying a real
+dataset of experimental measurements. The particularity of this tutorial is
+that, as in most real coupling analyses, the lag of the coupling is unknown.
+Therefore, we need to estimate information flow at different lags in order
+to determine the coupling delay. This tutorial will teach you how to do this
+with <a href="">TIM Matlab interface</a>.</p>
+
+<h2>Tutorial files</h2>
+<p>Here we provide the Matlab scripts that are used in this tutorial. </p>
+<p><a href="http://kasku.org/tutorials/tutorial_circuits.zip">Download tutorial files</a></p>
+<p>Using the scripts above you can easily reproduce the final results of
+the tutorial. However, our purpose is to teach you how to write the analysis
+script by yourself. That is why we will ignore function
+ until the end of this tutorial.</p>
+<p>If you are planning to run this tutorial in a computer which does not have
+access to the Internet you should also download the following data file and
+place it in the same folder as the tutorial scripts:</p>
+<p><a href="http://kasku.org/tutorials/tutorial_circuits_data.zip">Download tutorial dataset</a></p>
+<h2>Data generation</h2>
+<p>The data consists of real experimental measurements from two nonlinear
+Mackey-Glass circuits unidirectionally coupled through their voltage variables.
+The master circuit was additionally subjected to a feedback loop which made it
+generate high dimensional chaotic dynamics. Time-varying coupling between master
+and slave was then induced by periodically modulating coupling strength with an
+external CPU. The voltage measurements obtained from each circuit consisted of
+182 trials, each with 1000 data samples. The goal of our analysis is to
+discover the unidirectional information flow from master towards slave using only
+the available voltage measurements, without any further a priori information.</p>
+<p>If you have access to the internet you can load the data into Matlab by
+simply running:</p>
+<pre><code>&gt;&gt; pset = generate_pset;
+</code></pre>
+<p>If you are running the tutorial offline and have downloaded the tutorial
+data file manually then you should run instead:</p>
+<pre><code>&gt;&gt; pset = generate_pset('tutorial-circuits-data.zip');
+</code></pre>
+<p>The output of this command is a cell-array <code>pset</code> of dimensions 2 x 182. The
+rows of this cell array correspond to the time-series obtained from each of
+the two electronic circuits while the columns contain independent repetitions
+of those time-series.</p>
+<h2>Measuring information transfer</h2>
+<p>We will start our analysis by asessing information flow from the first circuit
+(the master) towards the second (the slave). In the following, we will refer to
+the master time-series as the <em>source</em> of the information flow and we will refer
+to the slave time-series as the <em>sink</em> of the information flow.</p>
+<h3>State-space reconstruction</h3>
+<p>Before anything else, we have to reconstruct the <a href="http://en.wikipedia.org/wiki/Phase_space">state-space</a>
+of these scalar time-series of voltage measurements. This can be done using 
+<a href="http://en.wikipedia.org/wiki/Takens%27_theorem">delay embedding</a>:</p>
+<pre><code>&gt;&gt; dim = 1, tau = 1;
+&gt;&gt; Ssink = delay_embed(pset(1, :), dim, tau);
+&gt;&gt; Ssource = delay_embed(pset(2, :), dim, tau);
+</code></pre>
+<p>where <code>dim</code> and <code>tau</code> are the embedding dimension and the embedding delay, 
+respectively. Choosing the right embedding parameters can be a tricky 
+issue. For a comprehensive review on delay embedding and state-space
+reconstruction, we recommend you <a href="http://books.google.fi/books?id=RfQjAG2pKMUC&amp;lpg=PP1&amp;hl=en&amp;pg=PP1#v=onepage&amp;q=&amp;f=false">this book</a>. The simplest
+approach to delay embedding is to take <code>tau = 1</code>, <code>dim = 1</code> and successively
+embed in higher dimensions until the results of the analysis are consistent.</p>
+<h3>Lambda functions</h3>
+<p>For convenience, we shall define a lambda function (or <code>function_handle</code> 
+in Matlab's terminology) as follows:</p>
+<pre><code>&gt;&gt; estimator = @(x) transfer_entropy_t(x(1,:), x(2,:), x(3,:), ...
+    5, 0, 5:30, 0, 20);
+</code></pre>
+<p>This lambda function bundles together the chosen information measure 
+ with its associated input parameters 
+(<code>timeWindowRadius = 5</code> samples, <code>k = 20</code> nearest neighbors). Function
+ requires that you specify the coupling
+lag. Since this lag is unknown we entered a plausible range: <code>5:30</code>. 
+This range will obviously vary depending on 
+the target application. Since we are computing the TE for 26 different lags, 
+the output produced by function <code>estimator</code> will be an array of
+dimensions (26 x 1000). That is, a TE value for each lag and time instant.</p>
+<p>Usually, time-varying estimates of information theoretic measures have a large 
+temporal variance. If we assume that the coupling dynamics are relatively 
+slow, we can reduce the variance by simply smoothing the estimates e.g. 
+with a moving average filter. In order to incorporate this post-processing 
+step, we further define the following lambda function:</p>
+<pre><code>&gt;&gt; estimator_smooth = @(x) filter(1/20*ones(1,20), 1, estimator(x), [], 2);
+</code></pre>
+<h3>Temporal transfer entropy estimates</h3>
+<p>We are now ready to measure information flow from the <em>source</em> time-series 
+towards the <em>sink</em> time-series using transfer entropy (TE):</p>
+<pre><code>&gt;&gt; W = delay_embed_future(Ssink);
+&gt;&gt; te21 = estimator_smooth([Ssink;Ssource;W]);
+</code></pre>
+<p>where the first command builds the future of <code>Ssink</code>. </p>
+<h2>Assessing significance</h2>
+<p><strong>Note:</strong> See <a href="">this tutorial</a> for a brief explanation of what significance
+and significance threshold mean.</p>
+<p>Determining the significance threshold for the temporal TE estimates that
+we obtained in the previous section can be easily done with 
+<a href="">TIM Matlab interface</a> using the following commands:</p>
+<pre><code>&gt;&gt; te21sig = permutation_test([Ssink; Ssource;W], [1 2 1], ...
+    estimator_smooth, .05);
+</code></pre>
+<p>The last input parameter to function  is 
+the significance level or p-value. The second input parameter of function</p>
+<p>is a vector of indices that determines how to shuffle the data trials of 
+each input time-series. The value <code>[1 2 1]</code> in the code above means that 
+the first (<code>Ssink</code>) and third (<code>W</code>) inputs to function 
+ should be treated as a single entity 
+when generating the randomly shuffled surrogates. Equivalently, this means 
+that, in the surrogates, the time-series <code>Ssource</code> will be always out-of-trial 
+(i.e. uncoupled) in respect to <code>Ssink</code> and <code>W</code>. See the help of 
+ and 
+for further explanations. </p>
+<h2>Results</h2>
+<p>The TE values corresponding to the flow from the master towards the slave
+circuit are shown in the figure below:</p>
+<div class="highslide-gallery">
+<a href="images/tutorial.circuits.fig21.png" class="highslide" onclick="hs.expandDuration = 250; hs.restoreDuration = 250; return hs.expand(this)">
+    <img src="remark_files/thumbnails/tutorial.circuits.fig21-8d0b5136317618e1.png" alt="Information flow from the master circuit towards the slave circuit. " title="Information flow from the master circuit towards the slave circuit. " /></a>
+<div class="highslide-caption">
+Information flow from the master circuit towards the slave circuit. 
+</div>
+</div>
+
+<p>The waveform in the lower part of the figure depicts TE values at lag = 20 
+sampling instants. The following figure shows in dark red the tuplas
+(lag, time instant) where the estimated TE value reached significance
+(p &lt; 0.05) and in blue those where it did not reach significance:</p>
+<div class="highslide-gallery">
+<a href="images/tutorial.circuits.fig21sig.png" class="highslide" onclick="hs.expandDuration = 250; hs.restoreDuration = 250; return hs.expand(this)">
+    <img src="remark_files/thumbnails/tutorial.circuits.fig21sig-d5ef6bd900d8bc77.png" alt="Significance for transfer entropy from the master circuit towards the slave circuit. " title="Significance for transfer entropy from the master circuit towards the slave circuit. " /></a>
+<div class="highslide-caption">
+Significance for transfer entropy from the master circuit towards the slave circuit. 
+</div>
+</div>
+
+<p>The waveform in the lower part of the figure above depicts TE significance
+thresholds at lag = 20 sampling instants. Clearly, the two figures above lead
+us to the conclusion that the master system is exerting a major effect on the
+dynamics of the slave circuit, with a coupling lag of roughly 20 sampling
+instants. Moreover, the coupling dynamics seem to follow a strongly periodic
+pattern with a period of roughly 100 data samples.</p>
+<p>We should now repeat the steps in the previous section to assess also
+information flow from the slave circuit towards the master. The result
+would be the following two figures:</p>
+<div class="highslide-gallery">
+<a href="images/tutorial.circuits.fig12.png" class="highslide" onclick="hs.expandDuration = 250; hs.restoreDuration = 250; return hs.expand(this)">
+    <img src="remark_files/thumbnails/tutorial.circuits.fig12-273e8fab36618e99.png" alt="Information flow from the slave circuit towards the master circuit. " title="Information flow from the slave circuit towards the master circuit. " /></a>
+<div class="highslide-caption">
+Information flow from the slave circuit towards the master circuit. 
+</div>
+<a href="images/tutorial.circuits.fig12sig.png" class="highslide" onclick="hs.expandDuration = 250; hs.restoreDuration = 250; return hs.expand(this)">
+    <img src="remark_files/thumbnails/tutorial.circuits.fig12sig-279f10a366883fbb.png" alt="Significance for transfer entropy from the slave circuit towards the master circuit. " title="Significance for transfer entropy from the slave circuit towards the master circuit. " /></a>
+<div class="highslide-caption">
+Significance for transfer entropy from the slave circuit towards the master circuit. 
+</div>
+</div>
+
+<p>which correctly indicate that there is not any significant flow of information
+from slave to master at any lag.</p>
+<p>For convenience, you can generate the four figures above by just running
+the following commands:</p>
+<pre><code>&gt;&gt; pset = generate_pset                       % load the dataset
+&gt;&gt; results = tutorial-circuits-analysis(pset) % performs the TE analysis
+&gt;&gt; tutorial-circuits-figures(results)         % generates the figures
+</code></pre>
+<p>However, the best way of learning this tutorial is that you try to re-generate
+these figures without using the provided function <code>tutorial-circuits-analysis</code>.</p>
+<h2>Credits</h2>
+<p><a href="http://www.cs.tut.fi/~gomezher/index.htm">German Gomez-Herrero</a> wrote this tutorial. </p>
+<p>The experimental measurements were obtained by Miguel C. Soriano from the
+<a href="http://ifisc.uib.es/">Institute for Cross-Disciplinary Physics and Complex Systems</a>,
+at Palma de Mallorca, Spain.</p>
+</div>
+<div id="remark-footer">
+<p><a href="http://kaba.hilvi.org/remark">Remark 1.5.1</a> - Page generated 05.02.2013 12:30.</p>
+</div>
+</div>
+</body>
+</html>
