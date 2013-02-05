@@ -133,6 +133,11 @@ h2 {padding: 20px 0px 20px 0px;}
 	content: "Courseware";	
 }
 
+.tutorial:after {
+	background-color: #fcf8e3;
+	content: "Tutorial";	
+}
+
 
 
 
