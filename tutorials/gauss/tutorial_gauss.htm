@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<title>Tutorial: Assessing coupling dynamics</title>
+<link rel="stylesheet" type="text/css" href="remark_files/remark.css" />
+<link rel="stylesheet" type="text/css" href="remark_files/pygments.css" />
+<script type="text/javascript" src="remark_files/ASCIIMathMLwFallback.js"></script>
+<script type="text/javascript" src="remark_files/highslide/highslide-full.js"></script>
+<link rel="stylesheet" type="text/css" href="remark_files/highslide/highslide.css" />
+<link href='http://fonts.googleapis.com/css?family=Open+Sans:300italic,700italic,300,700' rel='stylesheet' type='text/css'>
+<script type="text/javascript">
+hs.graphicsDir = 'remark_files/highslide/graphics/';
+hs.showCredits = false;
+</script>
+
+</head>
+<body>
+<div id = "remark-all">
+<div id = "remark">
+<div class = "ParentList">
+
+<ol>
+<li><a href="tutorial_gauss.htm">Tutorial: Assessing coupling dynamics</a></li>
+</ol>
+</div>
+
+<div class = "remark-end-list"></div>
+
+<h1>Tutorial: Assessing coupling dynamics</h1>
+<p><a href="http://germangh.com">Back to my homepage</a></p>
+<p>In this tutorial we will characterize coupling dynamics between several scalar time-series using function <a href="../tim/matlab/transfer_entropy_pt.m.htm">transfer_entropy_pt.m</a>, which is included in <a href="http://www.cs.tut.fi/~timhome/tim/matlab/tim_matlab.htm">TIM Matlab interface</a>. It is highly recommended that you go through the user documentation of <a href="http://www.tut.fi/tim">TIM</a> before 
+trying to follow this tutorial.</p>
+<h2>Tutorial files</h2>
+<p>Here we provide the Matlab scripts that are used in this tutorial. We also include pre-computed results for each step of the tutorial (time-series generation, partial transfer entropy computation, final analysis figures). </p>
+<p><a href="http://kasku.org/tutorials/tutorial_gauss.zip">Download tutorial files</a></p>
+<h2>Data generation</h2>
+<p>We consider the following non-linearly coupled Gaussian processes with a time-varying coupling factor:</p>
+<p>''x^{(r)}[n] = 0.4x^{(r)}[n-1]+eta_x''</p>
+<p>''y^{(r)}[n] = 0.5y^{(r)}[n-1]+kappa_{yx}[n]sin(x^{(r)}[n-tau_{yx}])+eta_y''</p>
+<p>''z^{(r)}[n] = 0.5z^{(r)}[n-1]+kappa_{zy}[n]sin(y^{(r)}[n-tau_{zy}])+eta_z''</p>
+<p>where the index ''r=1,...,50'' corresponds to the trial (or repetition) index and ''n=1,...,1500'' denotes time instants. The terms ''eta_x'', ''eta_y'' and ''eta_z'' are normally distributed noise processes, which are mutually independent across trials and time instants. The coupling delays are fixed to ''tau_{yx}=10'', ''tau_{zy}=15'' and the coupling strength is modulated using the following time-varying coupling factors:</p>
+<p>''kappa_{yx}[n]={(sin(0.004pi n), for 250 &lt;= n &lt;=750),(0,otherwise):}''</p>
+<p>''kappa_{zy}[n]={(cos(0.004pi n), for 750 &lt;= n &lt;=1250),(0,otherwise):}''</p>
+<p>You could write yourself a Matlab script to generate these time-series. We have done this for you so you just need to type the following Matlab command:</p>
+<pre><code>&gt;&gt; data = gaussian_process;
+</code></pre>
+<p>where <code>data</code> is a cell array of dimensions 3 x 50. The rows of this cell array correspond to the x, y, and z time-series and the columns contain different random repetitions. </p>
+<h2>Measuring information transfer</h2>
+<p>Let us assume that we have measured ''x^{(r)}[n]'', ''y^{(r)}[n]'' and ''z^{(r)}[n]'' and that we want to infer the underlying connectivity pattern and the corresponding coupling dynamics. Before anything else, we have to reconstruct the state-space of these scalar time-series, which can be done using delay embedding:</p>
+<pre><code>&gt;&gt; Sx = delay_embed(data(1,:), dim, tau);
+&gt;&gt; Sy = delay_embed(data(2,:), dim, tau);
+&gt;&gt; Sz = delay_embed(data(3,:), dim, tau);
+</code></pre>
+<p>where <code>dim</code> and <code>tau</code> are the embedding dimension and the embedding delay, respectively. Choosing the right embedding parameters can be a tricky issue. The simplest way is to take <code>tau = 1</code> and successively embed in higher dimensions until the results of the analysis are consistent. However, there are several <a href="http://www.worldscibooks.com/etextbook/5722/5722_chap1.pdf">more advanced techniques</a> that you may want to try. For a comprehensive review on delay embedding and state-space reconstruction, we recommend you <a href="http://books.google.fi/books?id=RfQjAG2pKMUC&amp;lpg=PP1&amp;hl=en&amp;pg=PP1#v=onepage&amp;q=&amp;f=false">this book</a> by <a href="http://www.mpipks-dresden.mpg.de/~kantz/">Holger Kantz</a> and <a href="http://www.mpipks-dresden.mpg.de/~schreibe/">Thomas Shreiber</a>, two well-known experts in the field. </p>
+<p>In our case, the default choice of <code>tau = 1</code> and <code>dim = 1</code> will produce satisfactory results, as we will see later. For convenience, we shall define here a lambda function (or <code>function_handle</code> using Matlab's terminology) as follows:</p>
+<pre><code>&gt;&gt; estimator = @(x, lag) transfer_entropy_pt(x(1,:), ...
+        x(2,:), x(3,:), x(4,:), 5, 0, lag, 0, 0, 20);
+</code></pre>
+<p>This lambda function bundles together the chosen information measure <a href="../tim/matlab/transfer_entropy_pt.m.htm">transfer_entropy_pt.m</a> with its associated input parameters (<code>timeWindowRadius = 5</code> samples, <code>k = 20</code> nearest neighbors). Usually, time-varying estimates of information theoretic measures will have a large temporal variance. If you assume that the coupling dynamics are relatively slow, you can reduce the variance by simply smoothing the estimates e.g. with a moving average filter. In order to incorporate this post-processing step, we further define the following lambda function:</p>
+<pre><code>&gt;&gt; estimator_smooth = @(x, lag) filter(1/20*ones(1,20), 1, ...
+        estimator(x,lag), [], 2);
+</code></pre>
+<p>Now we are ready to measure information flow e.g. from system <code>Sx</code> towards system <code>Sy</code> using the partial transfer entropy (PTE):</p>
+<pre><code>&gt;&gt; W = delay_embed_future(Sy);
+&gt;&gt; pte21 = estimator_smooth([Sy;Sx;Sz;W], 9);
+</code></pre>
+<p>where the first command builds the future of <code>Sy</code>. The delay of <code>Sx</code> should be such that the mutual information with W is maximized. By construction of our toy dataset, the lag that optimally aligns <code>Sx</code> and <code>W</code> is equal to ''tau_{yx}-1=9'' samples. If you do not know the optimum value a priori then you should compute the mutual information between <code>Sx</code> and <code>W</code> for multiple candidate lags using function <a href="../tim/matlab/mutual_information.m.htm">mutual_information.m</a>.</p>
+<h2>Significance threshold</h2>
+<p>Typically, a coupling analysis starts from the <a href="http://en.wikipedia.org/wiki/Null_hypothesis">null hypothesis</a> that the systems under study are uncoupled and the goal of the analysis is to prove otherwise. However estimators are not perfect and the number of data samples is finite, which explains why PTE estimates are almost never exactly zero. But then, how large should the PTE be to reject the null hypothesis? Determining this <em>significance threshold</em> analytically is difficult so we take instead a brute-force approach. We generate many <em>surrogate datasets</em> that resemble the dynamics of the original data but that, at the same time, are surely uncoupled. Say that you generate 20 such surrogates and that you compute the PTE for each of those surrogates. Let us then assume that the maximum (in absolute value) PTE estimate that you obtained was 0.15 nats. That is, if the true PTE is 0 nats you will get a PTE estimate above 0.15 nats in <em>less than</em> 5% of the occasions. Then, if you find from your original data a PTE estimate above 0.15 nats, you could say that the information flow is significant and has a p-value of 0.05, meaning that you have less than 5% chances of being wrong. </p>
+<p>We can generate the uncoupled data surrogates by simply shuffling the data trials. Let us assume that we had only two repetitions of the time-series ''x^{(r)}[n]'', ''y^{(r)}[n]'' and ''z^{(r)}[n]'', i.e. let us assume that <code>r = 2</code> in the equation describing the dynamics of our simulated dataset. Then, a disconnected surrogate of our time-series would be:</p>
+<pre><code>&gt;&gt; surrogate = {Sx{1,1} Sx{1,2};Sy{1,2} Sy{1,1};Sz{1,1} Sz{1,2}}
+</code></pre>
+<p>Since <code>Sx{1,1}</code> and <code>Sy{1,2}</code> correspond to different data trials, we know for sure that they are uncoupled. At the same time, the original data and the surrogate are very similar because different data trials have similar dynamics. All this process for determining the significance threshold can be easily done in TIM with the commands:</p>
+<pre><code>&gt;&gt; pte21_sig = permutation_test([Sy; Sx; Sz; W], [1 2 1 1], ...
+        @(x) estimator_smooth(x, 9), 0.05);
+</code></pre>
+<p>The last input parameter to function  is the significance level or p-value. Note that the smaller the p-value, the more repetitions of the time-series are necessary for generating enough uncoupled surrogates.  Following the example above, if you had only two trials, the minimum p-value that you could use would be <code>p = 0.5</code>. In a real study you should use p-values not greater than 0.05. The second input parameter of function <a href="./permutation_test.m.htm">permutation_test.m</a> is a vector of indices that determines how to shuffle the data trials. Only system variables corresponding to different index values will be shuffled. That is, the value <code>[1 2 1 1]</code> in the code above means that the first and second variables (<code>Sy</code> and <code>Sx</code>) should be shuffled with respect to each other but <code>Sy</code>, <code>Sz</code> and <code>W</code> should all correspond to the same data trial. See the help of <a href="./permutation_test.m.htm">permutation_test.m</a> and <a href="./permute_pset.m.htm">permute_pset.m</a> for further explanations. </p>
+<h2>Results</h2>
+<p>After assessing all possible directions of information transfer, we have obtained the following figures:</p>
+<div class="highslide-gallery">
+<a href="images/tutorial.gauss.fig21.png" class="highslide" onclick="hs.expandDuration = 250; hs.restoreDuration = 250; return hs.expand(this)">
+    <img src="remark_files/thumbnails/tutorial.gauss.fig21-5026ee24365a1a85.png" alt="Information flow from time-series x towards time-series y. " title="Information flow from time-series x towards time-series y. " /></a>
+<div class="highslide-caption">
+Information flow from time-series x towards time-series y. 
+</div>
+<a href="images/tutorial.gauss.fig12.png" class="highslide" onclick="hs.expandDuration = 250; hs.restoreDuration = 250; return hs.expand(this)">
+    <img src="remark_files/thumbnails/tutorial.gauss.fig12-260adba597ed7d0b.png" alt="Information flow from time-series y towards time-series x. " title="Information flow from time-series y towards time-series x. " /></a>
+<div class="highslide-caption">
+Information flow from time-series y towards time-series x. 
+</div>
+<a href="images/tutorial.gauss.fig32.png" class="highslide" onclick="hs.expandDuration = 250; hs.restoreDuration = 250; return hs.expand(this)">
+    <img src="remark_files/thumbnails/tutorial.gauss.fig32-2112b151ebe7b234.png" alt="Information flow from time-series y towards time-series z. " title="Information flow from time-series y towards time-series z. " /></a>
+<div class="highslide-caption">
+Information flow from time-series y towards time-series z. 
+</div>
+<a href="images/tutorial.gauss.fig23.png" class="highslide" onclick="hs.expandDuration = 250; hs.restoreDuration = 250; return hs.expand(this)">
+    <img src="remark_files/thumbnails/tutorial.gauss.fig23-cad2f64be2682791.png" alt="Information flow from time-series z towards time-series y. " title="Information flow from time-series z towards time-series y. " /></a>
+<div class="highslide-caption">
+Information flow from time-series z towards time-series y. 
+</div>
+<a href="images/tutorial.gauss.fig31.png" class="highslide" onclick="hs.expandDuration = 250; hs.restoreDuration = 250; return hs.expand(this)">
+    <img src="remark_files/thumbnails/tutorial.gauss.fig31-46be78b861f59901.png" alt="Information flow from time-series x towards time-series z. " title="Information flow from time-series x towards time-series z. " /></a>
+<div class="highslide-caption">
+Information flow from time-series x towards time-series z. 
+</div>
+<a href="images/tutorial.gauss.fig13.png" class="highslide" onclick="hs.expandDuration = 250; hs.restoreDuration = 250; return hs.expand(this)">
+    <img src="remark_files/thumbnails/tutorial.gauss.fig13-e85af1419e87b6cc.png" alt="Information flow from time-series z towards time-series x. " title="Information flow from time-series z towards time-series x. " /></a>
+<div class="highslide-caption">
+Information flow from time-series z towards time-series x. 
+</div>
+</div>
+
+<p>These figures can be reproduced in MATLAB with the commands:</p>
+<pre><code>&gt;&gt; tutorial_gauss_data;     % generate the time-series
+&gt;&gt; tutorial_gauss_analysis; % estimate temporal PTE
+&gt;&gt; tutorial_gauss_figures;  % generate the figures
+</code></pre>
+</div>
+<div id="remark-footer">
+<p><a href="http://kaba.hilvi.org/remark">Remark 1.5.1</a> - Page generated 05.02.2013 11:42.</p>
+</div>
+</div>
+</body>
+</html>
