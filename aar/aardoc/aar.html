@@ -1,0 +1,137 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 3.2 Final//EN">
+
+<!--Converted with LaTeX2HTML 2002-2-1 (1.71)
+original version by:  Nikos Drakos, CBLU, University of Leeds
+* revised and updated by:  Marcus Hennecke, Ross Moore, Herb Swan
+* with significant contributions from:
+  Jens Lippmann, Marek Rouchal, Martin Wilck and others -->
+<HTML>
+<HEAD>
+<TITLE>Automatic Artifact Removal (AAR) toolbox v1.3 (Release 09.12.2007) for MATLAB</TITLE>
+<META NAME="description" CONTENT="Automatic Artifact Removal (AAR) toolbox v1.3 (Release 09.12.2007) for MATLAB">
+<META NAME="keywords" CONTENT="aar">
+<META NAME="resource-type" CONTENT="document">
+<META NAME="distribution" CONTENT="global">
+
+<META NAME="Generator" CONTENT="LaTeX2HTML v2002-2-1">
+<META HTTP-EQUIV="Content-Style-Type" CONTENT="text/css">
+
+<LINK REL="STYLESHEET" HREF="aar.css">
+
+<LINK REL="next" HREF="node1.html">
+</HEAD>
+
+<script src="http://www.google-analytics.com/urchin.js" type="text/javascript">
+</script>
+<script type="text/javascript">
+_uacct = "UA-2923001-1";
+urchinTracker();
+</script>
+
+<BODY >
+<!--Navigation Panel-->
+<A NAME="tex2html28"
+  HREF="node1.html">
+<IMG WIDTH="37" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="next"
+ SRC="next.gif"></A> 
+<IMG WIDTH="26" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="up"
+ SRC="up_g.gif"> 
+<IMG WIDTH="63" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="previous"
+ SRC="prev_g.gif"> 
+<A NAME="tex2html26"
+  HREF="node1.html">
+<IMG WIDTH="65" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="contents"
+ SRC="contents.gif"></A>  
+<BR>
+<B> Next:</B> <A NAME="tex2html29"
+  HREF="node1.html">Contents</A>
+ &nbsp; <B>  <A NAME="tex2html27"
+  HREF="node1.html">Contents</A></B> 
+<BR>
+<BR>
+<!--End of Navigation Panel-->
+
+<P>
+<H1 ALIGN=CENTER>Automatic Artifact Removal (AAR) toolbox v1.3 (Release 09.12.2007) for MATLAB</H1>
+<P ALIGN=CENTER><A HREF="http://www.cs.tut.fi/~gomezher/index.htm"><STRONG>Germ&#225;n G&#243;mez-Herrero</STRONG></A>
+<BR><A HREF="http://www.tut.fi"><I>Tampere University of Technology</I></A>
+</P>
+<HR>
+
+<P>
+
+<H3>Abstract:</H3>
+<DIV>
+This MATLAB toolbox integrates several state-of-the-art methods for automatic removal of artifacts in the electroencephalogram&nbsp;(EEG). The methods implemented so far are only for removal of ocular (EOG) and muscular (EMG) artifacts. EOG removal methods include regression techniques based on Least Mean Squares (LMS), Recursive Least Squares (RLS) and other adaptive algorithms. However, the core functionality of the toolbox is a general-purpose artifact removal procedure that consists on three steps. First, the EEG data is decomposed into several spatial components using Blind Source Separation (BSS). Second, a suitable criteria is used to automatically detect artifact-related components. Third, the EEG data is reconstructed using only non-artifactual components. The toolbox is designed so that the user can easily expand it by adding new BSS algorithms and new criteria for detecting artifactual components. Furthermore it can be easily integrated as a plug-in into EEGLAB, which is a very popular graphical toolbox for EEG analysis and visualization in MATLAB.
+</DIV>
+<P>
+
+<P>
+
+<P>
+<BR><HR>
+<P>
+Back to: <A HREF="../../software.htm#aar">Transforms methods for Electroencephalography / software</A>
+</P>
+<P>
+Get a <A HREF="../aardoc.pdf">PDF</A> version of this document
+</P>
+
+<P>
+Get the <a href="../aarcode.zip">MATLAB code</a>
+</P>
+<BR>
+<HR>
+<!--Table of Child-Links-->
+<A NAME="CHILD_LINKS"></A>
+
+<UL>
+<LI><A NAME="tex2html30"
+  HREF="node1.html">Contents</A>
+<LI><A NAME="tex2html31"
+  HREF="node2.html">License and disclaimer</A>
+<LI><A NAME="tex2html32"
+  HREF="node3.html">Conventions</A>
+<LI><A NAME="tex2html33"
+  HREF="node4.html">Installation</A>
+<LI><A NAME="tex2html34"
+  HREF="node5.html">EOG removal using regression</A>
+<UL>
+<LI><A NAME="tex2html35"
+  HREF="node6.html">Least Mean Squares (LMS)</A>
+<LI><A NAME="tex2html36"
+  HREF="node7.html">Conventional Recursive Least Squares (CRLS)</A>
+<LI><A NAME="tex2html37"
+  HREF="node8.html">Stable Recursive Least Squares (SRLS)</A>
+<LI><A NAME="tex2html38"
+  HREF="node9.html">Algorithms based on the <!-- MATH
+ $H^{\infty}$
+ -->
+<IMG
+ WIDTH="36" HEIGHT="16" ALIGN="BOTTOM" BORDER="0"
+ SRC="img1.gif"
+ ALT="$ H^{\infty }$">
+ norm</A>
+</UL>
+<BR>
+<LI><A NAME="tex2html39"
+  HREF="node10.html">EOG and EMG removal using spatial filters</A>
+<LI><A NAME="tex2html40"
+  HREF="node11.html">Correction examples</A>
+<LI><A NAME="tex2html41"
+  HREF="node12.html">Version history</A>
+<LI><A NAME="tex2html42"
+  HREF="node13.html">Acknowledgments</A>
+<LI><A NAME="tex2html43"
+  HREF="node14.html">Bibliography</A>
+<LI><A NAME="tex2html44"
+  HREF="node15.html">About this document ...</A>
+</UL>
+<!--End of Table of Child-Links-->
+<BR><HR>
+<ADDRESS>
+gomezher
+2007-12-10
+</ADDRESS>
+</BODY>
+</HTML>

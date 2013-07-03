@@ -1,0 +1,262 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 3.2 Final//EN">
+
+<!--Converted with LaTeX2HTML 2002-2-1 (1.71)
+original version by:  Nikos Drakos, CBLU, University of Leeds
+* revised and updated by:  Marcus Hennecke, Ross Moore, Herb Swan
+* with significant contributions from:
+  Jens Lippmann, Marek Rouchal, Martin Wilck and others -->
+<HTML>
+<HEAD>
+<TITLE>Version history</TITLE>
+<META NAME="description" CONTENT="Version history">
+<META NAME="keywords" CONTENT="aar">
+<META NAME="resource-type" CONTENT="document">
+<META NAME="distribution" CONTENT="global">
+
+<META NAME="Generator" CONTENT="LaTeX2HTML v2002-2-1">
+<META HTTP-EQUIV="Content-Style-Type" CONTENT="text/css">
+
+<LINK REL="STYLESHEET" HREF="aar.css">
+
+<LINK REL="next" HREF="node13.html">
+<LINK REL="previous" HREF="node11.html">
+<LINK REL="up" HREF="aar.html">
+<LINK REL="next" HREF="node13.html">
+</HEAD>
+
+<BODY >
+<!--Navigation Panel-->
+<A NAME="tex2html200"
+  HREF="node13.html">
+<IMG WIDTH="37" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="next"
+ SRC="next.gif"></A> 
+<A NAME="tex2html196"
+  HREF="aar.html">
+<IMG WIDTH="26" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="up"
+ SRC="up.gif"></A> 
+<A NAME="tex2html190"
+  HREF="node11.html">
+<IMG WIDTH="63" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="previous"
+ SRC="prev.gif"></A> 
+<A NAME="tex2html198"
+  HREF="node1.html">
+<IMG WIDTH="65" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="contents"
+ SRC="contents.gif"></A>  
+<BR>
+<B> Next:</B> <A NAME="tex2html201"
+  HREF="node13.html">Acknowledgments</A>
+<B> Up:</B> <A NAME="tex2html197"
+  HREF="aar.html">Automatic Artifact Removal (AAR)</A>
+<B> Previous:</B> <A NAME="tex2html191"
+  HREF="node11.html">Correction examples</A>
+ &nbsp; <B>  <A NAME="tex2html199"
+  HREF="node1.html">Contents</A></B> 
+<BR>
+<BR>
+<!--End of Navigation Panel-->
+
+<H1><A NAME="SECTION00080000000000000000">
+Version history</A>
+</H1>
+
+<UL>
+<LI><B>Release 09-12-2007, version 1.3:</B> minor changes.
+
+<UL>
+<LI>SOBI is again the default algorithm for BSS-based EOG correction.
+</LI>
+<LI>Documentation has been updated and correction examples have been included.
+</LI>
+</UL>
+</LI>
+<LI><B>Release 04-12-2007, version 1.3:</B> minor bugs and few major bugs corrected.
+
+<UL>
+<LI>A few minor and major bugs were still left in the BSS interface
+     functions and have now been corrected.
+</LI>
+<LI>The interface functions use now <code>pinv</code>  instead of <code>inv</code> to avoid 
+     numerically unstable results when the data covariance matrix is close
+     to singular. This numerical unstability might be the reason for the small differences that were observed when running the artifact correction methods under different MATLAB versions and under different operating systems.
+</LI>
+<LI>The default window length in the automatic EMG correction method is
+     now twice as long as it was before. 
+</LI>
+</UL>
+
+<P>
+</LI>
+<LI><B>Release 03-12-2007, version 1.3:</B> major bugs corrected.
+
+<UL>
+<LI>Several major bugs have been corrected in the functions that act as
+     interface to the BSS algorithms. 
+</LI>
+<LI>Parameters passed to the BSS algorithms were ignored in previous
+     releases due to a bug in function <code>autobss.m</code>. This has been corrected.
+</LI>
+</UL>
+
+<P>
+</LI>
+<LI><B>Release 29-11-2007, version 1.3:</B> minor bugs corrected.
+
+<UL>
+<LI>Minor bugs corrected.
+</LI>
+</UL>
+
+<P>
+</LI>
+<LI><B>Release 28-11-2007, version 1.3:</B> major bugs corrected.
+
+<UL>
+<LI>A major bug in function <code>emg_psd.m</code> has been corrected. This bug was
+     causing the <code>emg_psd.m</code> criterion to incorrectly detect the EMG-related
+     components.
+</LI>
+<LI>Minor update of function <code>pop_autobssemg.m</code> to adapt to the new version
+     of function <code>emg_psd.m</code>
+</LI>
+<LI>The criterion <code>emg_psd.m</code> now accepts a new parameter that allows the user to select the spectral estimator to be used to compute the EEG average power and the EMG average power of each estimated component.
+</LI>
+<LI>A compatibility issue related to function <code>emg_psd.m</code> has been solved.
+     Previously to this change, the criterion <code>emg_psd</code> was producing
+     different results when using MATLAB's Signal Processing Toolbox 6.6
+     and previous when using older versions of the Signal Processing Toolbox.
+     Now it produces ''almost'' the same results. 
+</LI>
+<LI>Several other minor bugs corrected.
+</LI>
+</UL>
+
+<P>
+</LI>
+<LI><B>Release 07-11-2007, version 1.3:</B> minor update.
+
+<UL>
+<LI><code>pop_autobssemg</code> now automatically passes the sampling rate to <code>emg_psd.m</code>
+</LI>
+<LI>First draft of the toolbox documentation.
+</LI>
+</UL>
+
+<P>
+</LI>
+<LI><B>Release 31-10-2007, version 1.3:</B> minor update.
+ 
+<UL>
+<LI>Minor bugs corrected.
+</LI>
+<LI>EFICA v1.9 was updated with EFICA v2.0 (implemented by Z. Koldovsk&#253;).
+ 
+</LI>
+</UL>
+
+<P>
+</LI>
+<LI><B>Release 29-10-2007, version 1.3:</B> iWASOBI, EFICA, COMBI, FCOMBI added.
+ 
+<UL>
+<LI>Few minor bugs corrected.
+</LI>
+<LI>Slightly improved documentation.
+</LI>
+<LI>A sample EEG dataset has been included in the release.
+</LI>
+<LI>Added several new algorithms for BSS: iWASOBI, EFICA, COMBI, FCOMBI. 
+</LI>
+</UL>
+
+<P>
+</LI>
+<LI><B>Release 01-07-2006, version 1.2:</B>, Regression-based and PCA-based EOG correction added.
+
+<UL>
+<LI>Automatic EOG correction using Least Mean Squares (LMS) adaptive filtering.
+     This is implemented in <code>lms_regression.m</code>.
+</LI>
+<LI>Automatic EOG correction using the conventional Recursive Least 
+     Squares (RLS) adaptive algorithm. This is implemented in function <code>crls_regression.m</code>.
+</LI>
+<LI>Automatic EOG correction using an stable version of the RLS algorithm.
+     This is implemented in <code>scrls_regression.m</code>.
+</LI>
+<LI>Automatic EOG correction using two H-infinity regression methods. These
+     are implemented in functions <code>hinftv_regression.m</code> and <code>hinfew_regression.m</code>.
+</LI>
+<LI>Automatic EOG correction using Principal Component Analysis (PCA).
+</LI>
+<LI>Some bugs corrected.
+</LI>
+</UL>
+
+<P>
+</LI>
+<LI><B>Release 10-04-2006, version 1.1:</B> EMG correction included.
+
+<UL>
+<LI>Automatic correction of EMG artifacts using canonical correlation analysis.
+     This is implemented in functions bsscca.m and <code>emg_psd.m</code>.
+</LI>
+<LI>Function BSS has been modified to separate the actual BSS algorithm
+     from the components selection criteria.
+</LI>
+<LI>Interfaces to BSSCCA, FastICA, JADE and RUNICA (implementation of Infomax
+     included in the EEGLAB toolbox)  have been included. 
+</LI>
+<LI>Ill-conditioning of the data covariance matrix is now handled properly.
+</LI>
+<LI>Some minor bugs corrected.
+</LI>
+</UL>
+
+<P>
+</LI>
+<LI><B>Release 27-02-2006, version 1.0:</B> original release.
+ 
+<UL>
+<LI>Automatic correction of EOG artifacts using Blind Source Separation (BSS).
+</LI>
+<LI>Only an interface to SOBI is provided.
+ 
+</LI>
+</UL>
+</LI>
+</UL> 
+
+<P>
+<HR>
+<!--Navigation Panel-->
+<A NAME="tex2html200"
+  HREF="node13.html">
+<IMG WIDTH="37" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="next"
+ SRC="next.gif"></A> 
+<A NAME="tex2html196"
+  HREF="aar.html">
+<IMG WIDTH="26" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="up"
+ SRC="up.gif"></A> 
+<A NAME="tex2html190"
+  HREF="node11.html">
+<IMG WIDTH="63" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="previous"
+ SRC="prev.gif"></A> 
+<A NAME="tex2html198"
+  HREF="node1.html">
+<IMG WIDTH="65" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="contents"
+ SRC="contents.gif"></A>  
+<BR>
+<B> Next:</B> <A NAME="tex2html201"
+  HREF="node13.html">Acknowledgments</A>
+<B> Up:</B> <A NAME="tex2html197"
+  HREF="aar.html">Automatic Artifact Removal (AAR)</A>
+<B> Previous:</B> <A NAME="tex2html191"
+  HREF="node11.html">Correction examples</A>
+ &nbsp; <B>  <A NAME="tex2html199"
+  HREF="node1.html">Contents</A></B> 
+<!--End of Navigation Panel-->
+<ADDRESS>
+gomezher
+2007-12-10
+</ADDRESS>
+</BODY>
+</HTML>

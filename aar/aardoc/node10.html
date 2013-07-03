@@ -1,0 +1,201 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 3.2 Final//EN">
+
+<!--Converted with LaTeX2HTML 2002-2-1 (1.71)
+original version by:  Nikos Drakos, CBLU, University of Leeds
+* revised and updated by:  Marcus Hennecke, Ross Moore, Herb Swan
+* with significant contributions from:
+  Jens Lippmann, Marek Rouchal, Martin Wilck and others -->
+<HTML>
+<HEAD>
+<TITLE>EOG and EMG removal using spatial filters</TITLE>
+<META NAME="description" CONTENT="EOG and EMG removal using spatial filters">
+<META NAME="keywords" CONTENT="aar">
+<META NAME="resource-type" CONTENT="document">
+<META NAME="distribution" CONTENT="global">
+
+<META NAME="Generator" CONTENT="LaTeX2HTML v2002-2-1">
+<META HTTP-EQUIV="Content-Style-Type" CONTENT="text/css">
+
+<LINK REL="STYLESHEET" HREF="aar.css">
+
+<LINK REL="next" HREF="node11.html">
+<LINK REL="previous" HREF="node5.html">
+<LINK REL="up" HREF="aar.html">
+<LINK REL="next" HREF="node11.html">
+</HEAD>
+
+<BODY >
+<!--Navigation Panel-->
+<A NAME="tex2html176"
+  HREF="node11.html">
+<IMG WIDTH="37" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="next"
+ SRC="next.gif"></A> 
+<A NAME="tex2html172"
+  HREF="aar.html">
+<IMG WIDTH="26" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="up"
+ SRC="up.gif"></A> 
+<A NAME="tex2html166"
+  HREF="node9.html">
+<IMG WIDTH="63" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="previous"
+ SRC="prev.gif"></A> 
+<A NAME="tex2html174"
+  HREF="node1.html">
+<IMG WIDTH="65" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="contents"
+ SRC="contents.gif"></A>  
+<BR>
+<B> Next:</B> <A NAME="tex2html177"
+  HREF="node11.html">Correction examples</A>
+<B> Up:</B> <A NAME="tex2html173"
+  HREF="aar.html">Automatic Artifact Removal (AAR)</A>
+<B> Previous:</B> <A NAME="tex2html167"
+  HREF="node9.html">Algorithms based on the</A>
+ &nbsp; <B>  <A NAME="tex2html175"
+  HREF="node1.html">Contents</A></B> 
+<BR>
+<BR>
+<!--End of Navigation Panel-->
+
+<H1><A NAME="SECTION00060000000000000000"></A>
+<A NAME="sec:spatial"></A>
+<BR>
+EOG and EMG removal using spatial filters
+</H1>
+
+<P>
+The toolbox implements a spatial filtering framework for removing different types of artifacts. This framework consists on three basic steps. First, the original EEG data is decomposed into a set of spatial components. Second, artifactual components are identified using a suitable automatic criterion. Third, the EEG data is reconstructed by projecting back to the electrodes only the non-artifactual spatial components. Within this framework, many artifact removal algorithms can be defined by defining the way the spatial components are estimated and by defining the criterion used for identifying artifactual components. The default installation of the toolbox can decompose the EEG data into a set of spatial components using:
+
+<P>
+
+<UL>
+<LI><I>iWASOBI</I>&nbsp;[<A
+ HREF="node14.html#tichavsky08ICASSP">24</A>]. This is a efficient version of the algorithm WASOBI&nbsp;[<A
+ HREF="node14.html#yeredor00SPL">25</A>,<A
+ HREF="node14.html#tichavsky06a">21</A>], which is an asymptotically optimal Blind Source Separation&nbsp;(BSS) algorithm for autoregressive (AR) sources. This algorithm is implemented in file <code>iwasobi.m</code>, which is owned by Dr. Tichavsky. See iWASOBI's web-page&nbsp;[<A
+ HREF="node14.html#iwasobi">20</A>] for related license information and to get the latest version of <code>iwasobi.m</code>. 
+</LI>
+<LI><I>EFICA</I>&nbsp;[<A
+ HREF="node14.html#koldovsky06">14</A>]. This is an asymptotically efficient version of the well-known Independent Component Analysis (ICA) algorithm FastICA&nbsp;[<A
+ HREF="node14.html#hyvarinen99">12</A>,<A
+ HREF="node14.html#fastica">19</A>]. Rights and ownership related to the MATLAB file <code>efica.m</code> implementing this algorithm are owned by Dr. Koldovsky. Please visit the EFICA download web-page&nbsp;[<A
+ HREF="node14.html#efica">13</A>] to get the most up to date version of <code>efica.m</code>.
+</LI>
+<LI><I>MULTICOMBI</I>&nbsp;[<A
+ HREF="node14.html#tichavsky08NN">23</A>]. This is a BSS algorithm able to simultaneously separate non-Gaussian and time-correlated sources. This algorithm is implemented in file <code>multicombi.m</code>, which is owned by Dr. Tichavsky and Dr. Koldovsky. You can visit MULTICOMBI's web-page&nbsp;[<A
+ HREF="node14.html#multicombi">22</A>] to get the latest version of <code>multicombi.m</code>.
+</LI>
+<LI><I>FCOMBI</I>&nbsp;[<A
+ HREF="node14.html#gomezherrero07">9</A>]. FCOMBI is a computationally more efficient version of MULTICOMBI. However, FCOMBI is not as stable and reliable as MULTICOMBI.
+</LI>
+<LI><I>SOBI</I>&nbsp;[<A
+ HREF="node14.html#belouchrani97TSP">2</A>]. SOBI uses second order statistics to find spatial components that have non-zero time-delayed autocorrelations and zero time-delayed cross-correlations. The toolbox uses the implementation of SOBI included in EEGLAB.
+</LI>
+<LI><I>RUNICA</I>&nbsp;[<A
+ HREF="node14.html#makeig96">16</A>]. This is the implementation of the ICA algorithm Infomax&nbsp;[<A
+ HREF="node14.html#bell95b">1</A>], which is included in the default installation of EEGLAB. 
+</LI>
+<LI><I>JADER</I>&nbsp;[<A
+ HREF="node14.html#jader">4</A>]. This is Cardoso's implementation of his well-known ICA algorithm JADE&nbsp;[<A
+ HREF="node14.html#cardoso99">3</A>]. The algorithm is not included in the toolbox release but the toolbox is able to automatically detect it if it can be found in the MATLAB's path. JADE can be downloaded from ICA Central&nbsp;[<A
+ HREF="node14.html#jader">4</A>].
+</LI>
+<LI><I>FastICA</I>&nbsp;[<A
+ HREF="node14.html#hyvarinen99">12</A>,<A
+ HREF="node14.html#fastica">19</A>]. A very popular ICA algorithm that finds maximally non-Gaussian components. FastICA is not included in the toolbox release but it will be recognized by the toolbox if it can be found in the MATLAB's path. FastICA can be downloaded from the FastICA page at the Helsinki University of Technology&nbsp;[<A
+ HREF="node14.html#fastica">19</A>].
+</LI>
+<LI><I>BSSCCA</I>. Canonical Correlation Analysis (CCA), as defined in&nbsp;[<A
+ HREF="node14.html#declercq06">5</A>]. It projects the observed EEG data into maximally auto-correlated components.
+</LI>
+<LI><I>PCA</I>. Decomposes the data into its principal components.
+</LI>
+</UL>
+
+<P>
+The criteria that are included in the current version of the toolbox are:
+
+<P>
+
+<UL>
+<LI><I>eog_fd</I>. This criterion was proposed in&nbsp;[<A
+ HREF="node14.html#gomezherrero06">8</A>]. It marks as artifactual the components with smaller fractal dimension. Conceptually, components with low fractal dimensions are those who are composed of few low-frequency components. This is often the case of ocular activity and therefore this is a suitable criteria for detecting ocular (EOG) components. 
+</LI>
+<LI><I>eog_corr</I>. This criterion considers as EOG-related those components whose cross-correlation with any of the available reference EOG channels exceed certain threshold.
+</LI>
+<LI><I>emg_psd</I>. This criterion considers to be EMG-related those components whose ratio of average power in the typical EEG and EMG bands is below certain threshold.
+</LI>
+</UL>
+
+<P>
+By default, the toolbox uses a combination of <I>iWASOBI</I> and the criterion <I>eog_fd</I> to automatically correct EOG artifacts in the EEG. This default combination can be called from the EEGLAB menu ''Remove EOG using BSS'', which opens a dialog like in Fig.&nbsp;<A HREF="#fig:autobsseog">6</A>. Using the graphical interface, the user can specify the length and shift between correlative analysis windows. A window shift of 1 second and a window length of 2 seconds means that the first analysis window (on which the BSS-based spatial filters will be obtained) will cover the time range 0-2 seconds, the second analysis window will correspond to the time range 1-3 seconds, the third window will cover the time 2-4 seconds and so on. Note that the optimum window temporal range would be that that covers enough data samples to learn the artifactual spatial components and as few as possible neural EEG components. Therefore, there is no easy and objective way of selecting the optimum window length. If our artifacts have relatively stable spatial patterns (e.g. EOG artifacts) a longer window length might be more appropriate. However, a too long window might cause removal of some EEG components due to the low spatial resolution of the EEG recordings. If our artifacts have relatively short duration (e.g. sudden EMG bursts), a short analysis window might be more appropriate.
+
+<P>
+Additionally, the user can pass extra parameters to the BSS algorithm and to the criterion. A parameter that is common to all BSS algorithms is <code>'eigratio'</code>, which determines the number of principal components that will be kept in the pre-processing PCA step which is performed before any BSS algorithm. The number of PCA components will be such that the ratio between the largest and smallest eigenvalue of the PCA-transformed data matrix is below the specified <code>'eigratio'</code>. A large <code>'eigratio'</code> will most likely not remove any principal component but might lead to numerical unstability of the BSS algorithm due to an ill-conditioned covariance matrix. By contrary, a small value of <code>'eigratio'</code> will cause some inaccuracies due to the removal of some principal components but will enforce the data covariance matrix to be well-conditioned. By default the <code>'eigratio'</code> is 1e6. 
+
+<P>
+An important option that can be passed to all available rejection criteria is the <code>'range'</code> of components that should be removed. That range specifies the minimum and maximum number of components that are to be marked as artifactual in each analysis window. A range like <code>[5,5]</code> enforces the rejection of the 5 components ranked as most likely to be artifactual by the respective criterion. Indeed, increasing the number of rejected components allows for removing more EOG but increases the chances of removing also useful EEG activity of neural origin. If the user selects the criterion <I>eog_corr</I>, the index of at least a reference EOG channel must be provided through the graphical interface. 
+
+<P>
+
+<DIV ALIGN="CENTER"><A NAME="fig:autobsseog"></A><A NAME="150"></A>
+<TABLE>
+<CAPTION ALIGN="BOTTOM"><STRONG>Figure 6:</STRONG>
+Interface window for EOG removal using spatial filters.</CAPTION>
+<TR><TD><IMG
+ BORDER="0"
+ SRC="autobsseog.png"
+ ALT="Interface window for EOG removal using spatial filters."></TD></TR>
+</TABLE>
+</DIV>
+
+<P>
+EMG correction can be performed by selecting the EEGLAB menu ''remove EMG using BSS'', which opens an interface window as in Fig.&nbsp;<A HREF="#fig:autobssemg">7</A>. By default, the BSS algorithm used is based on CCA as in&nbsp;[<A
+ HREF="node14.html#declercq06">5</A>]. Currently, the only automatic criterion that can be used for detecting EMG components is <I>emg_psd</I>. The option <code>'range'</code> allows to reject a fixed number of components in each analysis window, as explained above. Another important parameter of the <I>emg_psd</I> criterion is the ratio of average power in the typical EEG band and in the typical EMG band. For instance, the option <code>'ratio',10</code> makes the criterion to mark as EMG-related only those components having less than 10 times more average power in the EEG band than in the EMG band. The boundary between EEG and EMG bands can be specified using the parameter <code>'femg'</code>. The sampling rate of the data also needs to be specified using the parameter <code>'fs'</code>. The user can also specify with the parameter <code>estimator</code>, the type of spectral estimator that will be used to estimate the power in the EEG and EMG bands. By default the estimator used is a Hamming-windowed Welch periodogram with segment length equal to the analysis window length. You can check the help of the MATLAB function implementing the different criteria and BSS algorithms for more details on the available options.
+
+<P>
+
+<DIV ALIGN="CENTER"><A NAME="fig:autobssemg"></A><A NAME="159"></A>
+<TABLE>
+<CAPTION ALIGN="BOTTOM"><STRONG>Figure 7:</STRONG>
+Interface window for EMG removal using spatial filters.</CAPTION>
+<TR><TD><IMG
+ BORDER="0"
+ SRC="autobssemg.png"
+ ALT="Interface window for EMG removal using spatial filters."></TD></TR>
+</TABLE>
+</DIV>
+
+<P>
+<HR>
+<!--Navigation Panel-->
+<A NAME="tex2html176"
+  HREF="node11.html">
+<IMG WIDTH="37" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="next"
+ SRC="next.gif"></A> 
+<A NAME="tex2html172"
+  HREF="aar.html">
+<IMG WIDTH="26" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="up"
+ SRC="up.gif"></A> 
+<A NAME="tex2html166"
+  HREF="node9.html">
+<IMG WIDTH="63" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="previous"
+ SRC="prev.gif"></A> 
+<A NAME="tex2html174"
+  HREF="node1.html">
+<IMG WIDTH="65" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="contents"
+ SRC="contents.gif"></A>  
+<BR>
+<B> Next:</B> <A NAME="tex2html177"
+  HREF="node11.html">Correction examples</A>
+<B> Up:</B> <A NAME="tex2html173"
+  HREF="aar.html">Automatic Artifact Removal (AAR)</A>
+<B> Previous:</B> <A NAME="tex2html167"
+  HREF="node9.html">Algorithms based on the</A>
+ &nbsp; <B>  <A NAME="tex2html175"
+  HREF="node1.html">Contents</A></B> 
+<!--End of Navigation Panel-->
+<ADDRESS>
+gomezher
+2007-12-10
+</ADDRESS>
+</BODY>
+</HTML>

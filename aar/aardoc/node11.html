@@ -1,0 +1,232 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 3.2 Final//EN">
+
+<!--Converted with LaTeX2HTML 2002-2-1 (1.71)
+original version by:  Nikos Drakos, CBLU, University of Leeds
+* revised and updated by:  Marcus Hennecke, Ross Moore, Herb Swan
+* with significant contributions from:
+  Jens Lippmann, Marek Rouchal, Martin Wilck and others -->
+<HTML>
+<HEAD>
+<TITLE>Correction examples</TITLE>
+<META NAME="description" CONTENT="Correction examples">
+<META NAME="keywords" CONTENT="aar">
+<META NAME="resource-type" CONTENT="document">
+<META NAME="distribution" CONTENT="global">
+
+<META NAME="Generator" CONTENT="LaTeX2HTML v2002-2-1">
+<META HTTP-EQUIV="Content-Style-Type" CONTENT="text/css">
+
+<LINK REL="STYLESHEET" HREF="aar.css">
+
+<LINK REL="next" HREF="node12.html">
+<LINK REL="previous" HREF="node10.html">
+<LINK REL="up" HREF="aar.html">
+<LINK REL="next" HREF="node12.html">
+</HEAD>
+
+<BODY >
+<!--Navigation Panel-->
+<A NAME="tex2html188"
+  HREF="node12.html">
+<IMG WIDTH="37" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="next"
+ SRC="next.gif"></A> 
+<A NAME="tex2html184"
+  HREF="aar.html">
+<IMG WIDTH="26" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="up"
+ SRC="up.gif"></A> 
+<A NAME="tex2html178"
+  HREF="node10.html">
+<IMG WIDTH="63" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="previous"
+ SRC="prev.gif"></A> 
+<A NAME="tex2html186"
+  HREF="node1.html">
+<IMG WIDTH="65" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="contents"
+ SRC="contents.gif"></A>  
+<BR>
+<B> Next:</B> <A NAME="tex2html189"
+  HREF="node12.html">Version history</A>
+<B> Up:</B> <A NAME="tex2html185"
+  HREF="aar.html">Automatic Artifact Removal (AAR)</A>
+<B> Previous:</B> <A NAME="tex2html179"
+  HREF="node10.html">EOG and EMG removal</A>
+ &nbsp; <B>  <A NAME="tex2html187"
+  HREF="node1.html">Contents</A></B> 
+<BR>
+<BR>
+<!--End of Navigation Panel-->
+
+<H1><A NAME="SECTION00070000000000000000">
+Correction examples</A>
+</H1>
+In this section we show few correction examples obtained with a long-term EEG recording from a patient suffering Mesial Temporal Lobe Epilepsy. The <a href="../../databases.htm">data</a> was provided by our collaborators at the Kaholieke Universiteit Leuven (Belgium) and was collected from 21 scalp electrodes placed according to the international 10-20 System with addition electrodes T1 and T2 on the temporal region. The sampling frequency was 250 Hz and an average reference montage was used. The dataset did not have EOG channels and therefore regression-based techniques were not suitable for removing EOG artifacts. Thus, we used the default BSS-based EOG removal algorithm included in the toolbox to suppress as much EOG activity as possible. Subsequently, we used the EMG correction algorithm to remove EMG artifacts. It is important to notice when using any of the BSS-based algorithms included in the toolbox that the corrected dataset will be rank deficient. Also, the order in which the algorithms are applied is important and the results differ depending on the order in which EOG and EMG artifacts are removed. In general, we have observed that slightly better results are obtained when removing EOG artifacts first. 
+
+<P>
+In Fig.&nbsp;<A HREF="#fig:275to290">8</A> we show a frame of original EEG spanning from second 275 to second 290. Observe that this EEG frame contains just few blinks and almost no EMG artifacts. In Fig.&nbsp;<A HREF="#fig:275to290eog">9</A> we show the result of the automatic EOG correction algorithm. Notice how the blinks were almost perfectly removed while the clean EEG was not significantly altered. In Fig.&nbsp;<A HREF="#fig:275to290eogemg">10</A> we show the result of applying EMG correction algorithm on the EOG corrected dataset. We can observed that Fig.&nbsp;<A HREF="#fig:275to290eog">9</A> and Fig.&nbsp;<A HREF="#fig:275to290eogemg">10</A> are almost identical, which is a desirable result since there was very little EMG activity in this EEG frame.
+
+<P>
+In Fig&nbsp;<A HREF="#fig:320to335">11</A> we show the EEG frame that covers the temporal range from second 320 to second 335, which corresponds to the first clinical signs of a seizure. This frame is heavily contaminated by EMG artifacts and contains also some ocular artifacts. In Fig&nbsp;<A HREF="#fig:320to335eog">12</A> is the result of removing the EOG artifacts and in Fig.&nbsp;<A HREF="#fig:320to335eogemg">13</A> after removing also the EMG artifacts.
+
+<P>
+In Fig.&nbsp;<A HREF="#fig:380to395">14</A> appears the EEG from second 380 to second 395. This EEG frame contains little EOG activity but is considerably distorted by several EMG bursts. In Fig.&nbsp;<A HREF="#fig:380to395eog">15</A> is shown the output of the EOG correction algorithm. As can be observed, the algorithm did not modified significantly the data as was expected. In Fig.&nbsp;<A HREF="#fig:380to395eogemg">16</A> appears the results of removing both EOG and EMG artifacts. Notice that most EMG artifacts were removed, while the sharp quality ictal theta activity was preserved.
+
+<P>
+
+<DIV ALIGN="CENTER"><A NAME="fig:275to290"></A><A NAME="176"></A>
+<TABLE>
+<CAPTION ALIGN="BOTTOM"><STRONG>Figure 8:</STRONG>
+Original EEG frame.</CAPTION>
+<TR><TD><IMG
+ BORDER="0"
+ SRC="275to290.png"
+ ALT="\begin{figure}\centering
+\epsfig{figure=275to290.eps,trim = 4mm 14mm 0 0, clip, width=\textwidth}\end{figure}"></TD></TR>
+</TABLE>
+</DIV>
+
+<P>
+
+<DIV ALIGN="CENTER"><A NAME="fig:275to290eog"></A><A NAME="181"></A>
+<TABLE>
+<CAPTION ALIGN="BOTTOM"><STRONG>Figure 9:</STRONG>
+EOG corrected frame.</CAPTION>
+<TR><TD><IMG
+ BORDER="0"
+ SRC="275to290eog.png"
+ ALT="\begin{figure}\centering
+\epsfig{figure=275to290eog.eps,trim = 4mm 14mm 0 0, clip, width=\textwidth}\end{figure}"></TD></TR>
+</TABLE>
+</DIV>
+
+<P>
+
+<DIV ALIGN="CENTER"><A NAME="fig:275to290eogemg"></A><A NAME="186"></A>
+<TABLE>
+<CAPTION ALIGN="BOTTOM"><STRONG>Figure 10:</STRONG>
+EOG and EMG corrected frame.</CAPTION>
+<TR><TD><IMG
+ BORDER="0"
+ SRC="275to290eogemg.png"
+ ALT="\begin{figure}\centering
+\epsfig{figure=275to290eogemg.eps,trim = 4mm 14mm 0 0, clip, width=\textwidth}\end{figure}"></TD></TR>
+</TABLE>
+</DIV>
+
+<P>
+
+<DIV ALIGN="CENTER"><A NAME="fig:320to335"></A><A NAME="191"></A>
+<TABLE>
+<CAPTION ALIGN="BOTTOM"><STRONG>Figure 11:</STRONG>
+Original EEG frame.</CAPTION>
+<TR><TD><IMG
+ BORDER="0"
+ SRC="320to335.png"
+ ALT="\begin{figure}\centering
+\epsfig{figure=320to335.eps,trim = 4mm 14mm 0 0, clip, width=\textwidth}\end{figure}"></TD></TR>
+</TABLE>
+</DIV>
+
+<P>
+
+<DIV ALIGN="CENTER"><A NAME="fig:320to335eog"></A><A NAME="196"></A>
+<TABLE>
+<CAPTION ALIGN="BOTTOM"><STRONG>Figure 12:</STRONG>
+EOG corrected frame.</CAPTION>
+<TR><TD><IMG
+ BORDER="0"
+ SRC="320to335eog.png"
+ ALT="\begin{figure}\centering
+\epsfig{figure=320to335eog.eps,trim = 4mm 14mm 0 0, clip, width=\textwidth}\end{figure}"></TD></TR>
+</TABLE>
+</DIV>
+
+<P>
+
+<DIV ALIGN="CENTER"><A NAME="fig:320to335eogemg"></A><A NAME="201"></A>
+<TABLE>
+<CAPTION ALIGN="BOTTOM"><STRONG>Figure 13:</STRONG>
+EOG and EMG corrected frame.</CAPTION>
+<TR><TD><IMG
+ BORDER="0"
+ SRC="320to335eogemg.png"
+ ALT="\begin{figure}\centering
+\epsfig{figure=320to335eogemg.eps,trim = 4mm 14mm 0 0, clip, width=\textwidth}\end{figure}"></TD></TR>
+</TABLE>
+</DIV>
+
+<P>
+
+<DIV ALIGN="CENTER"><A NAME="fig:380to395"></A><A NAME="206"></A>
+<TABLE>
+<CAPTION ALIGN="BOTTOM"><STRONG>Figure 14:</STRONG>
+Original EEG frame.</CAPTION>
+<TR><TD><IMG
+ WIDTH="1112" HEIGHT="686" BORDER="0"
+ SRC="380to395.png"
+ ALT="\begin{figure}\centering
+\epsfig{figure=380to395.eps,trim = 4mm 14mm 0 0, clip, width=\textwidth}\end{figure}"></TD></TR>
+</TABLE>
+</DIV>
+
+<P>
+
+<DIV ALIGN="CENTER"><A NAME="fig:380to395eog"></A><A NAME="211"></A>
+<TABLE>
+<CAPTION ALIGN="BOTTOM"><STRONG>Figure 15:</STRONG>
+EOG corrected frame.</CAPTION>
+<TR><TD><IMG
+ WIDTH="1112" HEIGHT="686" BORDER="0"
+ SRC="380to395eog.png"
+ ALT="\begin{figure}\centering
+\epsfig{figure=380to395eog.eps,trim = 4mm 14mm 0 0, clip, width=\textwidth}\end{figure}"></TD></TR>
+</TABLE>
+</DIV>
+
+<P>
+
+<DIV ALIGN="CENTER"><A NAME="fig:380to395eogemg"></A><A NAME="216"></A>
+<TABLE>
+<CAPTION ALIGN="BOTTOM"><STRONG>Figure 16:</STRONG>
+EOG and EMG corrected frame.</CAPTION>
+<TR><TD><IMG
+ BORDER="0"
+ SRC="380to395eogemg.png"
+ ALT="\begin{figure}\centering
+\epsfig{figure=380to395eogemg.eps,trim = 4mm 14mm 0 0, clip, width=\textwidth}\end{figure}"></TD></TR>
+</TABLE>
+</DIV>
+
+<P>
+<HR>
+<!--Navigation Panel-->
+<A NAME="tex2html188"
+  HREF="node12.html">
+<IMG WIDTH="37" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="next"
+ SRC="next.gif"></A> 
+<A NAME="tex2html184"
+  HREF="aar.html">
+<IMG WIDTH="26" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="up"
+ SRC="up.gif"></A> 
+<A NAME="tex2html178"
+  HREF="node10.html">
+<IMG WIDTH="63" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="previous"
+ SRC="prev.gif"></A> 
+<A NAME="tex2html186"
+  HREF="node1.html">
+<IMG WIDTH="65" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="contents"
+ SRC="contents.gif"></A>  
+<BR>
+<B> Next:</B> <A NAME="tex2html189"
+  HREF="node12.html">Version history</A>
+<B> Up:</B> <A NAME="tex2html185"
+  HREF="aar.html">Automatic Artifact Removal (AAR)</A>
+<B> Previous:</B> <A NAME="tex2html179"
+  HREF="node10.html">EOG and EMG removal</A>
+ &nbsp; <B>  <A NAME="tex2html187"
+  HREF="node1.html">Contents</A></B> 
+<!--End of Navigation Panel-->
+<ADDRESS>
+gomezher
+2007-12-10
+</ADDRESS>
+</BODY>
+</HTML>

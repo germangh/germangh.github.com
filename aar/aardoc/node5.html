@@ -1,0 +1,227 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 3.2 Final//EN">
+
+<!--Converted with LaTeX2HTML 2002-2-1 (1.71)
+original version by:  Nikos Drakos, CBLU, University of Leeds
+* revised and updated by:  Marcus Hennecke, Ross Moore, Herb Swan
+* with significant contributions from:
+  Jens Lippmann, Marek Rouchal, Martin Wilck and others -->
+<HTML>
+<HEAD>
+<TITLE>EOG removal using regression</TITLE>
+<META NAME="description" CONTENT="EOG removal using regression">
+<META NAME="keywords" CONTENT="aar">
+<META NAME="resource-type" CONTENT="document">
+<META NAME="distribution" CONTENT="global">
+
+<META NAME="Generator" CONTENT="LaTeX2HTML v2002-2-1">
+<META HTTP-EQUIV="Content-Style-Type" CONTENT="text/css">
+
+<LINK REL="STYLESHEET" HREF="aar.css">
+
+<LINK REL="next" HREF="node10.html">
+<LINK REL="previous" HREF="node4.html">
+<LINK REL="up" HREF="aar.html">
+<LINK REL="next" HREF="node6.html">
+</HEAD>
+
+<BODY >
+<!--Navigation Panel-->
+<A NAME="tex2html114"
+  HREF="node6.html">
+<IMG WIDTH="37" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="next"
+ SRC="next.gif"></A> 
+<A NAME="tex2html110"
+  HREF="aar.html">
+<IMG WIDTH="26" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="up"
+ SRC="up.gif"></A> 
+<A NAME="tex2html104"
+  HREF="node4.html">
+<IMG WIDTH="63" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="previous"
+ SRC="prev.gif"></A> 
+<A NAME="tex2html112"
+  HREF="node1.html">
+<IMG WIDTH="65" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="contents"
+ SRC="contents.gif"></A>  
+<BR>
+<B> Next:</B> <A NAME="tex2html115"
+  HREF="node6.html">Least Mean Squares (LMS)</A>
+<B> Up:</B> <A NAME="tex2html111"
+  HREF="aar.html">Automatic Artifact Removal (AAR)</A>
+<B> Previous:</B> <A NAME="tex2html105"
+  HREF="node4.html">Installation</A>
+ &nbsp; <B>  <A NAME="tex2html113"
+  HREF="node1.html">Contents</A></B> 
+<BR>
+<BR>
+<!--End of Navigation Panel-->
+
+<H1><A NAME="SECTION00050000000000000000"></A>
+<A NAME="sec:eogregr"></A>
+<BR>
+EOG removal using regression
+</H1>
+
+<P>
+The current version of the toolbox (v1.3) includes four adaptive algorithms for EOG removal using one or more EOG regression channels. The implementations of those algorithms are not optimized for speed so you should expect a relatively large computation time. The first algorithm is based on classical Least Mean Squares (LMS)&nbsp;[<A
+ HREF="node14.html#haykin96book">10</A>], which is very simple and quite stable if a small enough learning step is used. However, small learning steps lead to very slow convergence. The second algorithm is based on Recursive Least Squares&nbsp;(RLS)&nbsp;[<A
+ HREF="node14.html#haykin96book">10</A>] which offers a much greater convergence speed at the cost of reduced numerical stability. The third algorithm is a numerically stable version of the RLS algorithm&nbsp;[<A
+ HREF="node14.html#liavas99">15</A>]. Note that the implementation of this latter algorithm is still very naive and inefficient so the required computation time can be very large. The two last algorithms are based on <!-- MATH
+ $H^{\infty}$
+ -->
+<IMG
+ WIDTH="36" HEIGHT="16" ALIGN="BOTTOM" BORDER="0"
+ SRC="img1.gif"
+ ALT="$ H^{\infty }$">
+ principles&nbsp;[<A
+ HREF="node14.html#puthusserypady05">17</A>,<A
+ HREF="node14.html#puthusserypady06">18</A>]. The most important information related to these regression algorithms is summarized in Table.&nbsp;<A HREF="#table:regression">1</A>.
+
+<P>
+<BR><P></P>
+<DIV ALIGN="CENTER"><A NAME="41"></A>
+<TABLE>
+<CAPTION><STRONG>Table 1:</STRONG>
+The regression algorithms in a nutshell</CAPTION>
+<TR><TD>
+<DIV ALIGN="CENTER"><TABLE CELLPADDING=3 BORDER="1">
+<TR><TH ALIGN="LEFT"><B>Algorithm		</B></TH>
+<TH ALIGN="LEFT"><B>MATLAB files </B></TH>
+<TH ALIGN="LEFT"><B>Ref. </B></TH>
+<TH ALIGN="LEFT"><B>Strengths </B></TH>
+<TH ALIGN="LEFT"><B>Weaknesses </B></TH>
+</TR>
+<TR><TD ALIGN="LEFT">LMS</TD>
+<TD ALIGN="LEFT"><code>lms_regression</code></TD>
+<TD ALIGN="LEFT">[<A
+ HREF="node14.html#haykin96book">10</A>]</TD>
+<TD ALIGN="LEFT">Simplicity</TD>
+<TD ALIGN="LEFT">Slow conv.</TD>
+</TR>
+<TR><TD ALIGN="LEFT">&nbsp;</TD>
+<TD ALIGN="LEFT"><code>pop_lms_regression</code></TD>
+<TD ALIGN="LEFT">&nbsp;</TD>
+<TD ALIGN="LEFT">Stability</TD>
+<TD ALIGN="LEFT">&nbsp;</TD>
+</TR>
+<TR><TD ALIGN="LEFT">RLS</TD>
+<TD ALIGN="LEFT"><code>crls_regression</code></TD>
+<TD ALIGN="LEFT">[<A
+ HREF="node14.html#he04">11</A>]</TD>
+<TD ALIGN="LEFT">Fast conv.</TD>
+<TD ALIGN="LEFT">Unstability</TD>
+</TR>
+<TR><TD ALIGN="LEFT">&nbsp;</TD>
+<TD ALIGN="LEFT"><code>pop_crls_regression</code></TD>
+<TD ALIGN="LEFT">&nbsp;</TD>
+<TD ALIGN="LEFT">&nbsp;</TD>
+<TD ALIGN="LEFT">&nbsp;</TD>
+</TR>
+<TR><TD ALIGN="LEFT">Stable</TD>
+<TD ALIGN="LEFT"><code>scrls_regression</code></TD>
+<TD ALIGN="LEFT">[<A
+ HREF="node14.html#liavas99">15</A>]</TD>
+<TD ALIGN="LEFT">Fast conv.</TD>
+<TD ALIGN="LEFT">Comp. time</TD>
+</TR>
+<TR><TD ALIGN="LEFT">RLS</TD>
+<TD ALIGN="LEFT"><code>pop_scrls_regression</code></TD>
+<TD ALIGN="LEFT">&nbsp;</TD>
+<TD ALIGN="LEFT">Stability</TD>
+<TD ALIGN="LEFT">&nbsp;</TD>
+</TR>
+<TR><TD ALIGN="LEFT"><!-- MATH
+ $H^{\infty}$
+ -->
+<IMG
+ WIDTH="36" HEIGHT="16" ALIGN="BOTTOM" BORDER="0"
+ SRC="img1.gif"
+ ALT="$ H^{\infty }$">
+</TD>
+<TD ALIGN="LEFT"><code>hinftv_regression</code></TD>
+<TD ALIGN="LEFT">[<A
+ HREF="node14.html#puthusserypady05">17</A>]</TD>
+<TD ALIGN="LEFT">Fast conv.</TD>
+<TD ALIGN="LEFT">Unstability</TD>
+</TR>
+<TR><TD ALIGN="LEFT">&nbsp;</TD>
+<TD ALIGN="LEFT"><code>pop_hinftv_regression</code></TD>
+<TD ALIGN="LEFT">&nbsp;</TD>
+<TD ALIGN="LEFT">Accuracy</TD>
+<TD ALIGN="LEFT">Comp. time</TD>
+</TR>
+<TR><TD ALIGN="LEFT">&nbsp;</TD>
+<TD ALIGN="LEFT"><code>hinfew_regression</code></TD>
+<TD ALIGN="LEFT">&nbsp;</TD>
+<TD ALIGN="LEFT">&nbsp;</TD>
+<TD ALIGN="LEFT">&nbsp;</TD>
+</TR>
+<TR><TD ALIGN="LEFT">&nbsp;</TD>
+<TD ALIGN="LEFT"><code>pop_hinfew_regression</code></TD>
+<TD ALIGN="LEFT">&nbsp;</TD>
+<TD ALIGN="LEFT">&nbsp;</TD>
+<TD ALIGN="LEFT">&nbsp;</TD>
+</TR>
+</TABLE>
+
+<A NAME="table:regression"></A></DIV></TD></TR>
+</TABLE>
+</DIV><P></P>
+<BR>
+
+<P>
+<BR><HR>
+<!--Table of Child-Links-->
+<A NAME="CHILD_LINKS"><STRONG>Subsections</STRONG></A>
+
+<UL>
+<LI><A NAME="tex2html116"
+  HREF="node6.html">Least Mean Squares (LMS)</A>
+<LI><A NAME="tex2html117"
+  HREF="node7.html">Conventional Recursive Least Squares (CRLS)</A>
+<LI><A NAME="tex2html118"
+  HREF="node8.html">Stable Recursive Least Squares (SRLS)</A>
+<LI><A NAME="tex2html119"
+  HREF="node9.html">Algorithms based on the <!-- MATH
+ $H^{\infty}$
+ -->
+<IMG
+ WIDTH="36" HEIGHT="16" ALIGN="BOTTOM" BORDER="0"
+ SRC="img1.gif"
+ ALT="$ H^{\infty }$">
+ norm</A>
+</UL>
+<!--End of Table of Child-Links-->
+<HR>
+<!--Navigation Panel-->
+<A NAME="tex2html114"
+  HREF="node6.html">
+<IMG WIDTH="37" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="next"
+ SRC="next.gif"></A> 
+<A NAME="tex2html110"
+  HREF="aar.html">
+<IMG WIDTH="26" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="up"
+ SRC="up.gif"></A> 
+<A NAME="tex2html104"
+  HREF="node4.html">
+<IMG WIDTH="63" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="previous"
+ SRC="prev.gif"></A> 
+<A NAME="tex2html112"
+  HREF="node1.html">
+<IMG WIDTH="65" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="contents"
+ SRC="contents.gif"></A>  
+<BR>
+<B> Next:</B> <A NAME="tex2html115"
+  HREF="node6.html">Least Mean Squares (LMS)</A>
+<B> Up:</B> <A NAME="tex2html111"
+  HREF="aar.html">Automatic Artifact Removal (AAR)</A>
+<B> Previous:</B> <A NAME="tex2html105"
+  HREF="node4.html">Installation</A>
+ &nbsp; <B>  <A NAME="tex2html113"
+  HREF="node1.html">Contents</A></B> 
+<!--End of Navigation Panel-->
+<ADDRESS>
+gomezher
+2007-12-10
+</ADDRESS>
+</BODY>
+</HTML>

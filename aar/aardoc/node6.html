@@ -1,0 +1,133 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 3.2 Final//EN">
+
+<!--Converted with LaTeX2HTML 2002-2-1 (1.71)
+original version by:  Nikos Drakos, CBLU, University of Leeds
+* revised and updated by:  Marcus Hennecke, Ross Moore, Herb Swan
+* with significant contributions from:
+  Jens Lippmann, Marek Rouchal, Martin Wilck and others -->
+<HTML>
+<HEAD>
+<TITLE>Least Mean Squares (LMS)</TITLE>
+<META NAME="description" CONTENT="Least Mean Squares (LMS)">
+<META NAME="keywords" CONTENT="aar">
+<META NAME="resource-type" CONTENT="document">
+<META NAME="distribution" CONTENT="global">
+
+<META NAME="Generator" CONTENT="LaTeX2HTML v2002-2-1">
+<META HTTP-EQUIV="Content-Style-Type" CONTENT="text/css">
+
+<LINK REL="STYLESHEET" HREF="aar.css">
+
+<LINK REL="next" HREF="node7.html">
+<LINK REL="previous" HREF="node5.html">
+<LINK REL="up" HREF="node5.html">
+<LINK REL="next" HREF="node7.html">
+</HEAD>
+
+<BODY >
+<!--Navigation Panel-->
+<A NAME="tex2html130"
+  HREF="node7.html">
+<IMG WIDTH="37" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="next"
+ SRC="next.gif"></A> 
+<A NAME="tex2html126"
+  HREF="node5.html">
+<IMG WIDTH="26" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="up"
+ SRC="up.gif"></A> 
+<A NAME="tex2html120"
+  HREF="node5.html">
+<IMG WIDTH="63" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="previous"
+ SRC="prev.gif"></A> 
+<A NAME="tex2html128"
+  HREF="node1.html">
+<IMG WIDTH="65" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="contents"
+ SRC="contents.gif"></A>  
+<BR>
+<B> Next:</B> <A NAME="tex2html131"
+  HREF="node7.html">Conventional Recursive Least Squares</A>
+<B> Up:</B> <A NAME="tex2html127"
+  HREF="node5.html">EOG removal using regression</A>
+<B> Previous:</B> <A NAME="tex2html121"
+  HREF="node5.html">EOG removal using regression</A>
+ &nbsp; <B>  <A NAME="tex2html129"
+  HREF="node1.html">Contents</A></B> 
+<BR>
+<BR>
+<!--End of Navigation Panel-->
+
+<H2><A NAME="SECTION00051000000000000000">
+Least Mean Squares (LMS)</A>
+</H2>
+
+<P>
+The graphical interface of the algorithm is shown in Fig.&nbsp;<A HREF="#fig:lms">1</A>. The parameters that can be specified in that window are described below:
+
+<P>
+
+<UL>
+<LI><I>EOG channel indexes</I>. The indexes of the EEG channels to be used as reference (regression) channels. At least one channel has to be specified.
+</LI>
+<LI><I>Filter order (M)</I>. The number of taps of the adaptive filter. By increasing the order we might remove more EOG artifacts but we also increase the risk of overcorrection, i.e. removing useful information from the EEG. Also, high filter orders increase the computation time, slow down convergence and might lead to numerical unstability. 
+</LI>
+<LI><I>Learning rate</I>. Decreasing this parameter slows down convergence but makes the algorithm more stable and viceversa.
+</LI>
+<LI><I>Store filter weights for channels</I>. In this field we can specify the indexes of the channels for which the values of the filter weights in each iteration should be tracked. If this field is left empty, tracking is not performed. Note that tracking the filter weights considerably increases the computation time and the memory requirements of the algorithm. The results of the tracking are stored in the field <code>.Hh</code> of the current EEGLAB structure. More specifically, the evolution of the i<IMG
+ WIDTH="18" HEIGHT="21" ALIGN="BOTTOM" BORDER="0"
+ SRC="img2.gif"
+ ALT="$ ^{th}$">
+ filter tap for the EEG channel corresponding to the j<IMG
+ WIDTH="18" HEIGHT="21" ALIGN="BOTTOM" BORDER="0"
+ SRC="img2.gif"
+ ALT="$ ^{th}$">
+ index specified in this field is stored in <code>EEG.Hh(i,j,:)</code>.
+</LI>
+</UL>
+
+<P>
+
+<DIV ALIGN="CENTER"><A NAME="fig:lms"></A><A NAME="56"></A>
+<TABLE>
+<CAPTION ALIGN="BOTTOM"><STRONG>Figure 1:</STRONG>
+Interface window for EOG removal using LMS regression.</CAPTION>
+<TR><TD><IMG
+ BORDER="0"
+ SRC="lms.png"
+ ALT="Interface window for EOG removal using LMS regression."></TD></TR>
+</TABLE>
+</DIV>
+
+<P>
+<HR>
+<!--Navigation Panel-->
+<A NAME="tex2html130"
+  HREF="node7.html">
+<IMG WIDTH="37" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="next"
+ SRC="next.gif"></A> 
+<A NAME="tex2html126"
+  HREF="node5.html">
+<IMG WIDTH="26" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="up"
+ SRC="up.gif"></A> 
+<A NAME="tex2html120"
+  HREF="node5.html">
+<IMG WIDTH="63" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="previous"
+ SRC="prev.gif"></A> 
+<A NAME="tex2html128"
+  HREF="node1.html">
+<IMG WIDTH="65" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="contents"
+ SRC="contents.gif"></A>  
+<BR>
+<B> Next:</B> <A NAME="tex2html131"
+  HREF="node7.html">Conventional Recursive Least Squares</A>
+<B> Up:</B> <A NAME="tex2html127"
+  HREF="node5.html">EOG removal using regression</A>
+<B> Previous:</B> <A NAME="tex2html121"
+  HREF="node5.html">EOG removal using regression</A>
+ &nbsp; <B>  <A NAME="tex2html129"
+  HREF="node1.html">Contents</A></B> 
+<!--End of Navigation Panel-->
+<ADDRESS>
+gomezher
+2007-12-10
+</ADDRESS>
+</BODY>
+</HTML>

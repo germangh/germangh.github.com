@@ -1,0 +1,122 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 3.2 Final//EN">
+
+<!--Converted with LaTeX2HTML 2002-2-1 (1.71)
+original version by:  Nikos Drakos, CBLU, University of Leeds
+* revised and updated by:  Marcus Hennecke, Ross Moore, Herb Swan
+* with significant contributions from:
+  Jens Lippmann, Marek Rouchal, Martin Wilck and others -->
+<HTML>
+<HEAD>
+<TITLE>Conventional Recursive Least Squares (CRLS)</TITLE>
+<META NAME="description" CONTENT="Conventional Recursive Least Squares (CRLS)">
+<META NAME="keywords" CONTENT="aar">
+<META NAME="resource-type" CONTENT="document">
+<META NAME="distribution" CONTENT="global">
+
+<META NAME="Generator" CONTENT="LaTeX2HTML v2002-2-1">
+<META HTTP-EQUIV="Content-Style-Type" CONTENT="text/css">
+
+<LINK REL="STYLESHEET" HREF="aar.css">
+
+<LINK REL="next" HREF="node8.html">
+<LINK REL="previous" HREF="node6.html">
+<LINK REL="up" HREF="node5.html">
+<LINK REL="next" HREF="node8.html">
+</HEAD>
+
+<BODY >
+<!--Navigation Panel-->
+<A NAME="tex2html142"
+  HREF="node8.html">
+<IMG WIDTH="37" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="next"
+ SRC="next.gif"></A> 
+<A NAME="tex2html138"
+  HREF="node5.html">
+<IMG WIDTH="26" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="up"
+ SRC="up.gif"></A> 
+<A NAME="tex2html132"
+  HREF="node6.html">
+<IMG WIDTH="63" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="previous"
+ SRC="prev.gif"></A> 
+<A NAME="tex2html140"
+  HREF="node1.html">
+<IMG WIDTH="65" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="contents"
+ SRC="contents.gif"></A>  
+<BR>
+<B> Next:</B> <A NAME="tex2html143"
+  HREF="node8.html">Stable Recursive Least Squares</A>
+<B> Up:</B> <A NAME="tex2html139"
+  HREF="node5.html">EOG removal using regression</A>
+<B> Previous:</B> <A NAME="tex2html133"
+  HREF="node6.html">Least Mean Squares (LMS)</A>
+ &nbsp; <B>  <A NAME="tex2html141"
+  HREF="node1.html">Contents</A></B> 
+<BR>
+<BR>
+<!--End of Navigation Panel-->
+
+<H2><A NAME="SECTION00052000000000000000">
+Conventional Recursive Least Squares (CRLS)</A>
+</H2>
+
+<P>
+The interface of this algorithm is shown in Fig.&nbsp;<A HREF="#fig:rls">2</A>. Most parameters shown in that interface were already explained when we discussed the LMS algorithm. There are, however, two new parameters:
+
+<P>
+
+<UL>
+<LI><I>Forgetting factor (lambda)</I>. This parameter defines how fast the RLS algorithm should forget past data samples. If we set it to 1 the algorithm uses all available data samples to estimate the filter weights. As we decrease this value the contribution of past samples to the weight estimation decreases. This is useful in a non-stationary environment where the spatial pattern of ocular artifacts (and therefore the optimum filter weights) vary considerably in time. By contrary, in a stationary environment, discarding past samples leads to higher errors in the estimation of the optimum filter weights.
+</LI>
+<LI><I>Sigma</I>. This parameter defines the initial state of the filter. Please read&nbsp;[<A
+ HREF="node14.html#he04">11</A>] for details. 
+</LI>
+</UL>
+
+<P>
+
+<DIV ALIGN="CENTER"><A NAME="fig:rls"></A><A NAME="68"></A>
+<TABLE>
+<CAPTION ALIGN="BOTTOM"><STRONG>Figure 2:</STRONG>
+Interface window for EOG removal using the RLS algorithm.</CAPTION>
+<TR><TD><IMG
+ BORDER="0"
+ SRC="rls.png"
+ ALT="Interface window for EOG removal using RLS regression."></TD></TR>
+</TABLE>
+</DIV>
+
+<P>
+<HR>
+<!--Navigation Panel-->
+<A NAME="tex2html142"
+  HREF="node8.html">
+<IMG WIDTH="37" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="next"
+ SRC="next.gif"></A> 
+<A NAME="tex2html138"
+  HREF="node5.html">
+<IMG WIDTH="26" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="up"
+ SRC="up.gif"></A> 
+<A NAME="tex2html132"
+  HREF="node6.html">
+<IMG WIDTH="63" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="previous"
+ SRC="prev.gif"></A> 
+<A NAME="tex2html140"
+  HREF="node1.html">
+<IMG WIDTH="65" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="contents"
+ SRC="contents.gif"></A>  
+<BR>
+<B> Next:</B> <A NAME="tex2html143"
+  HREF="node8.html">Stable Recursive Least Squares</A>
+<B> Up:</B> <A NAME="tex2html139"
+  HREF="node5.html">EOG removal using regression</A>
+<B> Previous:</B> <A NAME="tex2html133"
+  HREF="node6.html">Least Mean Squares (LMS)</A>
+ &nbsp; <B>  <A NAME="tex2html141"
+  HREF="node1.html">Contents</A></B> 
+<!--End of Navigation Panel-->
+<ADDRESS>
+gomezher
+2007-12-10
+</ADDRESS>
+</BODY>
+</HTML>
